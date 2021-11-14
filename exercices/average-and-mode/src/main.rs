@@ -33,7 +33,7 @@ fn main() {
     grades.iter().for_each(|grade|
         // check if grade is present in hashmap keys `occurences.entry(grade)`
         // if not, insert 0 as default value `[...].or_inset(0)`
-        // deference the key `*occurences` so it can update the value with `+= 1`
+        // deference the key `*occurences` so it can be updated the value with `+= 1`
         *occurences.entry(grade).or_insert(0) += 1
     );
 
