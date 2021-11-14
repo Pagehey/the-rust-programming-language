@@ -6,7 +6,7 @@ use std::collections::HashMap;
 
 fn main() {
     // use vec! macro to delcare new Vector from given array
-    let grades = vec![12, 14, 13, 15, 17, 20, 19, 14, 13, 11, 9];
+    let grades = vec![12, 14, 14, 13, 15, 17, 20, 19, 14, 13, 11, 9];
 
 // compute average:
 
@@ -38,10 +38,10 @@ fn main() {
     );
 
     // raw print of occurences
-    // {19: 1, 20: 1, 17: 1, 12: 1, 15: 1, 13: 2, 9: 1, 14: 2, 11: 1}
+    // {19: 1, 20: 1, 17: 1, 12: 1, 15: 1, 13: 2, 9: 1, 14: 3, 11: 1}
     println!("{:?}", occurences);
 
-    // find max pair in hash_map, a tuple is returned: (14, 2)
+    // find max pair in hash_map, a tuple is returned: (14, 3)
     // (if unwrap() is not used, `Some((14, 2))` is returned)
     let max = occurences.iter().max_by(|a, b| a.1.cmp(&b.1)).unwrap();
 
