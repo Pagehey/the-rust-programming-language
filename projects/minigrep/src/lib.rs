@@ -9,11 +9,19 @@ pub struct Config {
 }
 
 impl Config {
-  pub fn new(args: &[String]) -> Result<Self, &'static str> {
-      if args.len() < 3 { return Err("not enough arguments") }
+  pub fn new(mut args: env::Args) -> Result<Self, &'static str> {
+      args.next();
 
-      let query = args[1].clone();
-      let filename = args[2].clone();
+      let query = match args.next() {
+          Some(arg) => arg,
+          None => return Err("query argument is missing")
+      };
+
+      let filename = match args.next() {
+        Some(arg) => arg,
+        None => return Err("filename argument is missing")
+      };
+
       // let case_sensitive = match env::var("MINIGREP_CASE_INSENSITIVE") {
       //   Ok(value) => value != "1",
       //   _ => true
@@ -40,12 +48,18 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 
 fn search<'a>(query: &str, content: &'a str) -> Vec<&'a str> {
-  content.lines().filter(|line| line.contains(query)).collect()
+  content
+    .lines()
+    .filter(|line| line.contains(query))
+    .collect()
 }
 
 fn search_case_insensitive<'a>(query: &str, content: &'a str) -> Vec<&'a str> {
   let query = query.to_lowercase();
-  content.lines().filter(|line| line.to_lowercase().contains(&query)).collect()
+  content
+    .lines()
+    .filter(|line| line.to_lowercase().contains(&query))
+    .collect()
 }
 
 #[cfg(test)]
