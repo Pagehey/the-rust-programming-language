@@ -2,6 +2,13 @@ use std::env;
 use std::error::Error;
 use std::fs;
 
+/// Represents cli config
+/// ```
+/// use minigrep::Config;
+/// let config = Config::new(vec!["/minigrep".to_string(), "body".to_string(), "poem.txt".to_string()].into_iter()).unwrap();
+///
+/// assert_eq!(config.query, "body");
+/// assert_eq!(config.filename, "poem.txt");
 pub struct Config {
     pub query: String,
     pub filename: String,
@@ -9,7 +16,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(mut args: env::Args) -> Result<Self, &'static str> {
+    pub fn new<T: Iterator<Item = String>>(mut args: T) -> Result<Self, &'static str> {
         args.next();
 
         let query = match args.next() {

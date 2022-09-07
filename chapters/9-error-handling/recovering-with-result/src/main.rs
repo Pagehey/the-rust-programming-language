@@ -14,6 +14,6 @@ fn main() {
             other_error => {
                 panic!("Problem opening the file: {:?}", other_error)
             }
-        },
+        }
     };
 }
