@@ -10,11 +10,11 @@ use std::{
 use hello_web::ThreadPool;
 
 fn main() {
-    let bind = TcpListener::bind("127.0.0.1:7878").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     let request_id = Arc::new(Mutex::new(0));
     let pool = ThreadPool::new(4);
 
-    for stream in bind.incoming() {
+    for stream in listener.incoming() {
         let stream = stream.unwrap();
         let request_id = Arc::clone(&request_id);
 
@@ -23,6 +23,8 @@ fn main() {
             handle_connection(stream, id);
         });
     }
+
+    println!("Shutting down!");
 }
 
 fn get_request_id(request_id_mutex: Arc<Mutex<usize>>) -> usize {
